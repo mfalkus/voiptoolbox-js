@@ -1,4 +1,4 @@
-import vtLogo from './assets/vt-logo.svg'
+import vtLogo from '../assets/vt-logo.svg'
 
 function About() {
     return (

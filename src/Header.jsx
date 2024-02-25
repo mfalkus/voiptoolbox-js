@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import vtLogo from './assets/vt-logo.svg'
 
 function Header() {
@@ -12,19 +13,29 @@ function Header() {
 
             <ul className="nav nav-pills">
                 <li className="nav-item">
-                    <a href="/utils" className="nav-link  active">
-                        SIP Utilities
-                    </a>
+                <NavLink
+                    to="/utils"
+                    end
+                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
+                >
+                    SIP Utilities
+                </NavLink>
                 </li>
                 <li className="nav-item">
-                    <a href="/utils/reference" className="nav-link">
-                        Reference
-                    </a>
+                <NavLink
+                    to="/utils/reference"
+                    className="nav-link"
+                >
+                    Reference
+                </NavLink>
                 </li>
                 <li className="nav-item">
-                    <a href="/about" className="nav-link">
+                <NavLink
+                    to="/about"
+                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
+                >
                         About
-                    </a>
+                </NavLink>
                 </li>
             </ul>
         </header>
