@@ -1,0 +1,46 @@
+.chart-text {
+    display: block;
+    width: 100%;
+    min-height: 50vh;
+}
+
+.link-button {
+    padding: 1px 2px;
+    border: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: 1px solid black;
+}
+.link-button:hover {
+    border: 1px solid black;
+    opacity: 0.9;
+}
+.link-button:disabled,
+.link-button:hover:disabled {
+    border: none;
+}
+.diagram-wrapper {
+    text-align: center;
+}
+
+/* Clean sticky footer: https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+.site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+.site-content {
+    flex: 1;
+}
+.form-input {
+    margin-bottom: 10px;
+}
+
+.primary-button {
+    padding: 2px 5px;
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+.text-left {
+    text-align: left;
+}

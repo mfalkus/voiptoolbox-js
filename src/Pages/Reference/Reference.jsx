@@ -1,6 +1,10 @@
+import ReferenceHeader from "./ReferenceHeader";
+
 function Reference() {
 
     return (
+        <>
+        <ReferenceHeader />
         <div className="text-container">
         <div className="header-push"></div>
         <h1>Reference Data</h1>
@@ -288,6 +292,7 @@ function Reference() {
         </table>
 
         </div>
+        </>
     )
 }
 
