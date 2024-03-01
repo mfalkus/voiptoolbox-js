@@ -11,6 +11,7 @@ import DnsLookup from './Pages/SIPUtils/DNSLookup.jsx';
 import './vt-cover.scss'
 import SIPUtilsWrapper from './Pages/SIPUtils/SIPUtilsWrapper.jsx';
 import PacketAnalysis from './Pages/SIPUtils/PacketAnalysis.jsx';
+import SIPAuthTools from './Pages/SIPUtils/SIPAuthTools.jsx';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/utils/reference/diagram" element={<ReferenceWrapper><SipDiagramPage /></ReferenceWrapper>} />
               <Route path="/about" element={<About />} />
               <Route path="/utils/packet" element={<SIPUtilsWrapper><PacketAnalysis/></SIPUtilsWrapper>} />
+              <Route path="/utils/auth" element={<SIPUtilsWrapper><SIPAuthTools/></SIPUtilsWrapper>} />
               <Route path="/utils/:domain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
               <Route path="/:domain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
               <Route path="/" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />

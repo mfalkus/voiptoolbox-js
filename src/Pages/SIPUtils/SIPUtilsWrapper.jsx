@@ -18,6 +18,15 @@ function SIPUtilsWrapper(props) {
             </li>
             <li className="nav-item">
                 <NavLink
+                    to="/utils/auth"
+                    end
+                    className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
+                >
+                    SIP Auth Tools
+                </NavLink>
+            </li>
+            <li className="nav-item">
+                <NavLink
                     to="/utils/packet"
                     end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
