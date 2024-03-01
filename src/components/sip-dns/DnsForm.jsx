@@ -47,7 +47,7 @@ export default function DnsForm() {
             </div>
 
             <div className="col-12">
-                <button onClick={handleReset} className="btn btn-secondary mb-2">
+                <button onClick={handleReset} className="btn btn-secondary mb-2 bg-white">
                     Reset
                 </button>
             </div>

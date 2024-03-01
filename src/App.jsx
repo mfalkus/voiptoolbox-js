@@ -21,13 +21,14 @@ function App() {
       <Header />
         <div className="container">
             <Routes>
-              <Route path="/utils/reference" element={<ReferenceWrapper><Reference /></ReferenceWrapper>} />
-              <Route path="/utils/reference/diagram" element={<ReferenceWrapper><SipDiagramPage /></ReferenceWrapper>} />
+              <Route path="/reference" element={<ReferenceWrapper><Reference /></ReferenceWrapper>} />
+              <Route path="/reference/data" element={<ReferenceWrapper><Reference /></ReferenceWrapper>} />
+              <Route path="/reference/diagram" element={<ReferenceWrapper><SipDiagramPage /></ReferenceWrapper>} />
               <Route path="/about" element={<About />} />
               <Route path="/utils/packet" element={<SIPUtilsWrapper><PacketAnalysis/></SIPUtilsWrapper>} />
               <Route path="/utils/auth" element={<SIPUtilsWrapper><SIPAuthTools/></SIPUtilsWrapper>} />
-              <Route path="/utils/:domain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
-              <Route path="/:domain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
+              <Route path="/utils/:queryDomain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
+              <Route path="/:queryDomain" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
               <Route path="/" element={<SIPUtilsWrapper><DnsLookup /></SIPUtilsWrapper>} />
             </Routes>
         </div>

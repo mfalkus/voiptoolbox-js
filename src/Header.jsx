@@ -15,7 +15,6 @@ function Header() {
                 <li className="nav-item">
                 <NavLink
                     to="/utils"
-                    end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
                 >
                     SIP Utilities
@@ -23,7 +22,7 @@ function Header() {
                 </li>
                 <li className="nav-item">
                 <NavLink
-                    to="/utils/reference"
+                    to="/reference"
                     className="nav-link"
                 >
                     Reference

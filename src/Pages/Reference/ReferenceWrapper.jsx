@@ -9,7 +9,7 @@ function ReferenceWrapper(props) {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
                 <NavLink
-                    to="/utils/reference/diagram"
+                    to="/reference/diagram"
                     end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
                 >
@@ -18,7 +18,7 @@ function ReferenceWrapper(props) {
             </li>
             <li className="nav-item">
                 <NavLink
-                    to="/utils/reference"
+                    to="/reference/data"
                     end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
                 >
