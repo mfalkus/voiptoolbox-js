@@ -1,5 +1,5 @@
-import DnsForm from '../components/sip-dns/DnsForm.jsx';
-import DnsAbout from '../components/sip-dns/DnsAbout.jsx';
+import DnsForm from '../../components/sip-dns/DnsForm.jsx';
+import DnsAbout from '../../components/sip-dns/DnsAbout.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 // import '../../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css';

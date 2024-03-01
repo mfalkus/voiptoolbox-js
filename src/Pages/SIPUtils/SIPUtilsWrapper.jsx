@@ -1,34 +1,37 @@
 import { NavLink } from "react-router-dom";
 
-function ReferenceHeader() {
+function SIPUtilsWrapper(props) {
     return (
-        <nav className="navbar navbar-expand-md vt-navbar">
+        <>
+            <nav className="navbar navbar-expand-md vt-navbar">
             <nav className="nav nav-masthead">
             <div className="navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
                 <NavLink
-                    to="/utils/reference/diagram"
+                    to="/utils/"
                     end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
                 >
-                    Diagrams
+                    SIP DNS Lookup
                 </NavLink>
             </li>
             <li className="nav-item">
                 <NavLink
-                    to="/utils/reference"
+                    to="/utils/packet"
                     end
                     className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link inactive')}
                 >
-                    Reference
+                    Packet Analysis
                 </NavLink>
             </li>
             </ul>
             </div>
             </nav>
-        </nav>
+            </nav>
+            {props.children}
+        </>
     );
 }
 
-export default ReferenceHeader;
+export default SIPUtilsWrapper;

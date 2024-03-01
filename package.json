@@ -21,7 +21,8 @@
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
-    "react-tooltip": "^5.26.3"
+    "react-tooltip": "^5.26.3",
+    "sipright": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
