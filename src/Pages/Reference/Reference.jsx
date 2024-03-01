@@ -270,7 +270,6 @@ function Reference() {
         </td></tr><tr>
         <td><tt>s</tt>
         </td><td>Subject
-        </td><td>
 
         </td></tr><tr>
         <td><tt>t</tt>
