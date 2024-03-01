@@ -1,0 +1,88 @@
+// https://coolors.co/palette/e63946-f1faee-a8dadc-457b9d-1d3557
+
+$red: #e63946;
+$light: #f1faee;
+$light-blue: #a8dadc;
+$mid-blue: #457b9d;
+$dark-blue: #1d3557;
+
+/**
+ HEADER
+**/
+
+.header-push {
+    height: 120px;
+}
+header.main-header {
+    min-height: 60px;
+    position: fixed;
+    width: 100%;
+    background: white;
+    border-bottom: 2px dotted $mid-blue;
+    z-index: 100;
+}
+
+.logo-text {
+    font-family: monospace;
+    font-weight: bold;
+}
+.logo-wrapper {
+    float: left;
+    display: inline-flex;
+    align-items: center;
+
+    img {
+        max-width: 50px;
+        padding-right: 10px;
+        transform: rotate(-10deg);
+        transition: all 1s;
+    }
+    img:hover {
+        transform: rotate(0deg);
+    }
+    h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    padding: 7px;
+    border-top: 2px dotted $mid-blue;
+    background: $light;
+    font-family: monospace;
+    font-size: 12px;
+    color: $mid-blue;
+    a {
+        color: $dark-blue;
+    }
+}
+.footer-spacer {
+    height: 60px;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu ul {
+        position: absolute;
+        right: 0;
+        background: white;
+        border: 1px solid grey;
+        padding: 40px;
+        top: 100%;
+        li {
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+        }
+    }
+}
+
+.vt-navbar {
+    justify-content: center;
+    .logo-wrapper {
+        flex-grow: 1;
+    }
+}
