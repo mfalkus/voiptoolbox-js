@@ -1,6 +1,10 @@
+import { useState } from 'react';
+import {getSIP} from 'sipright';
+import authorize from '../../components/sip-auth/sip-auth-tool';
+
 function SIPAuthTools() {
 
-    let testInvitePacket =
+    let defaultSipRequest =
 `INVITE sip:1001@test.pbx.com SIP/2.0
 Via: SIP/2.0/TCP 10.0.0.1:10389;branch=z9hG4bK256e2860519f1d88f36f08c47932d8e2d8bdb51ffaaaa
 Contact: <sip:test_user_1@10.0.0.1:10389;transport=tcp>
@@ -14,6 +18,7 @@ Max-Forwards: 69
 Min-SE: 300
 Session-Expires: 3600
 Supported:
+
 `;
 
     let sampleAuthHeader = `Digest realm="test.pbx.com",nonce="1688850200/4f6c94f962fb39b5290b075f8c5deb56",opaque="4f585d34610c2e2d",algorithm=md5,qop="auth"`;
@@ -23,35 +28,91 @@ Supported:
     let nc = null;
     let cnonce = null;
 
-    if (0) {
+    const [value, setValue] = useState(defaultSipRequest);
+    const [submittedValue, setSubmittedValue] = useState('');
+    const [sip, setSip] = useState();
+    const [authResult, setAuthResult] = useState();
+    const [sipError, setSipError] = useState();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        setSubmittedValue(value);
+
+        // sipright is picky about newlines
+        var converted = value.replace(/(\r)?\n/g, "\r\n");
+        var sipContent = null;
+        var sipError = null;
+        try {
+            sipContent = getSIP(converted);
+        } catch (err) {
+            if (err && typeof(err) == 'object' ) {
+                sipError = err.toString();
+            } else {
+                sipError = err;
+            }
+        }
+
+        // Outside try/catch to reset previous errors/content
+        setSip(sipContent);
+
+        if (sipContent && !sipError) {
+            try {
+                setAuthResult(authorize(
+                    sipContent,
+                    'WWW-Authenticate',
+                    'Digest realm="test.pbx.com",nonce="1688850200/4f6c94f962fb39b5290b075f8c5deb56",opaque="4f585d34610c2e2d",algorithm=md5,qop="auth"',
+                    'testuser',
+                    'testpassword'
+                ));
+            } catch (err) {
+                if (err && typeof(err) == 'object' ) {
+                    sipError = err.toString();
+                } else {
+                    sipError = err;
+                }
+            }
+        }
+
+        setSipError(sipError);
+    }
+
+    const handleChange = (event) => {
+        setValue( event.target.value );
+        setSubmittedValue('');
+    }
+
+    if (sipError) {
         msgError = (
             <div className="alert alert-warning" role="alert">
                 <strong>Unable to process request.</strong>
-                <br />$msg-here
+                <br />{sipError}
             </div>
         );
+    }
 
+    if (authResult) {
         result = (
             <>
             <div className="mb-3">
                 <label className="form-label">
-                    SIP Request with <strong>{ msg.auth_parts.new_auth_header_key }</strong> header
+                    SIP Request with <strong>{ authResult.auth_parts.new_auth_header_key }</strong> header
                 </label>
-                <textarea className="form-control sip-pre-text">{ msg.new_request}</textarea>
+                <textarea className="form-control sip-pre-text">{ authResult.new_request}</textarea>
             </div>
             <div className="mb-3">
                 <label>
-                    <strong>{ msg.auth_parts.new_auth_header_key}</strong> Header Result:
+                    <strong>{ authResult.auth_parts.new_auth_header_key}</strong> Header Result:
                 </label>
-                <textarea className="form-control sip-hdr-pre-text">{ msg.auth_parts.new_auth_header_value}</textarea>
+                <textarea className="form-control sip-hdr-pre-text">{ authResult.auth_parts.new_auth_header_value}</textarea>
             </div>
 
             <div className="mb-3">
                 <label>Calculation Parts</label>
                 <ul>
-                    <li>Digest hash: <code>{ msg.auth_parts.calc_parts.digest_hash.response}</code></li>
-                    <li>A1 hash: <code>{ msg.auth_parts.calc_parts.a1_md5}</code></li>
-                    <li>A2 hash: <code>{ msg.auth_parts.calc_parts.a2_md5}</code></li>
+                    <li>Digest hash: <code>{ authResult.auth_parts.calc_parts.digest_hash.response}</code></li>
+                    <li>A1 hash: <code>{ authResult.auth_parts.calc_parts.a1_md5}</code></li>
+                    <li>A2 hash: <code>{ authResult.auth_parts.calc_parts.a2_md5}</code></li>
                 </ul>
             </div>
             </>
@@ -82,13 +143,16 @@ Supported:
                 <div className="col">
                     <h3>Input</h3>
 
-            <form>
+            <form onSubmit={handleSubmit}>
 
             <div className="mb-3">
                 <label className="form-label">SIP Request</label>
-                <textarea className="form-control sip-pre-text" name="packet">
-                {testInvitePacket}
-                </textarea>
+                <textarea
+                    className="form-control sip-pre-text"
+                    name="packet"
+                    onChange={handleChange}
+                    value={value}
+                />
             </div>
 
 
