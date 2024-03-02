@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import {getSIP} from 'sipright';
-import authorize from '../../components/sip-auth/sip-auth-tool';
+import {getSIP, authSIP} from 'sipright';
 
 function SIPAuthTools() {
 
@@ -58,7 +57,7 @@ Supported:
 
         if (sipContent && !sipError) {
             try {
-                setAuthResult(authorize(
+                setAuthResult(authSIP(
                     sipContent,
                     'WWW-Authenticate',
                     'Digest realm="test.pbx.com",nonce="1688850200/4f6c94f962fb39b5290b075f8c5deb56",opaque="4f585d34610c2e2d",algorithm=md5,qop="auth"',

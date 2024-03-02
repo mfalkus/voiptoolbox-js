@@ -23,7 +23,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
     "react-tooltip": "^5.26.3",
-    "sipright": "^1.0.0",
+    "sipright": "^1.0.2",
     "sprintf-js": "^1.1.3"
   },
   "devDependencies": {
