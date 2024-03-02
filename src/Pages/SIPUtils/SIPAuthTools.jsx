@@ -21,17 +21,19 @@ Supported:
 `;
 
     let sampleAuthHeader = `Digest realm="test.pbx.com",nonce="1688850200/4f6c94f962fb39b5290b075f8c5deb56",opaque="4f585d34610c2e2d",algorithm=md5,qop="auth"`;
-    let msgError = null;
     let result = <p>Awaiting submission...</p>;
-
-    let nc = null;
-    let cnonce = null;
 
     const [value, setValue] = useState(defaultSipRequest);
     const [submittedValue, setSubmittedValue] = useState('');
-    const [sip, setSip] = useState();
     const [authResult, setAuthResult] = useState();
     const [sipError, setSipError] = useState();
+
+    const [ncValue, setNcValue] = useState('');
+    const [cnonceValue, setCnonceValue] = useState('');
+    const [usernameValue, setUsernameValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+    const [authHeaderNameValue, setAuthHeaderNameValue] = useState('www-authenticate');
+    const [authHeaderValue, setAuthHeaderValue] = useState(sampleAuthHeader);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -52,18 +54,18 @@ Supported:
             }
         }
 
-        // Outside try/catch to reset previous errors/content
-        setSip(sipContent);
-
+        let sipAuthResult = '';
         if (sipContent && !sipError) {
             try {
-                setAuthResult(authSIP(
+                sipAuthResult = authSIP(
                     sipContent,
-                    'WWW-Authenticate',
-                    'Digest realm="test.pbx.com",nonce="1688850200/4f6c94f962fb39b5290b075f8c5deb56",opaque="4f585d34610c2e2d",algorithm=md5,qop="auth"',
-                    'testuser',
-                    'testpassword'
-                ));
+                    authHeaderNameValue,
+                    authHeaderValue,
+                    usernameValue,
+                    passwordValue,
+                    ncValue,
+                    cnonceValue
+                );
             } catch (err) {
                 if (err && typeof(err) == 'object' ) {
                     sipError = err.toString();
@@ -73,21 +75,19 @@ Supported:
             }
         }
 
-        setSipError(sipError);
+        if (sipError) {
+            setSipError(sipError);
+            setAuthResult('');
+        } else {
+            setSipError('');
+            debugger;
+            setAuthResult(sipAuthResult);
+        }
     }
 
     const handleChange = (event) => {
         setValue( event.target.value );
         setSubmittedValue('');
-    }
-
-    if (sipError) {
-        msgError = (
-            <div className="alert alert-warning" role="alert">
-                <strong>Unable to process request.</strong>
-                <br />{sipError}
-            </div>
-        );
     }
 
     if (authResult) {
@@ -97,13 +97,13 @@ Supported:
                 <label className="form-label">
                     SIP Request with <strong>{ authResult.auth_parts.new_auth_header_key }</strong> header
                 </label>
-                <textarea className="form-control sip-pre-text">{ authResult.new_request}</textarea>
+                <textarea className="form-control sip-pre-text" value={ authResult.new_request} />
             </div>
             <div className="mb-3">
                 <label>
                     <strong>{ authResult.auth_parts.new_auth_header_key}</strong> Header Result:
                 </label>
-                <textarea className="form-control sip-hdr-pre-text">{ authResult.auth_parts.new_auth_header_value}</textarea>
+                <textarea className="form-control sip-hdr-pre-text" value={ authResult.auth_parts.new_auth_header_value} />
             </div>
 
             <div className="mb-3">
@@ -134,13 +134,20 @@ Supported:
             credentials were used.
             </p>
 
-            {msgError}
+            {sipError ?
+                (
+                    <div className="alert alert-warning" role="alert">
+                        <strong>Unable to process request.</strong>
+                        <br />{sipError}
+                    </div>
+                ) : null
+            }
 
             <div className="alert alert-info">
             <div className="tool-container">
             <div className="row">
-                <div className="col">
-                    <h3>Input</h3>
+            <div className="col">
+            <h3>Input</h3>
 
             <form onSubmit={handleSubmit}>
 
@@ -157,16 +164,19 @@ Supported:
 
             <div className="mb-3">
                 <label className="form-label">Challenge Auth Header Name</label>
-                <select className="form-select" name="auth_header_key">
+                <select
+                    className="form-select"
+                    name="auth_header_key"
+                    value={authHeaderNameValue}
+                    onChange={e => setAuthHeaderNameValue(e.target.value)}
+                >
                     <option value="www-authenticate" selected>WWW-Authenticate</option>
                     <option value="proxy-authenticate">Proxy-Authenticate</option>
                 </select>
             </div>
             <div className="mb-3">
                 <label className="form-label">Challenge Auth Header Value</label>
-                <textarea className="form-control sip-hdr-pre-text" name="challenge_header">
-                {sampleAuthHeader}
-                </textarea>
+                <textarea className="form-control sip-hdr-pre-text" name="challenge_header" value={authHeaderValue} onChange={e => setAuthHeaderValue(e.target.value)} />
             </div>
 
 
@@ -175,13 +185,13 @@ Supported:
                 <div className="col">
                     <div className="mb-3">
                     <label className="form-label">Username</label>
-                    <input className="form-control" type="text" name="username" required />
+                    <input className="form-control" type="text" name="username" required value={usernameValue} onChange={e => setUsernameValue(e.target.value)} />
                     </div>
                 </div>
                 <div className="col">
                     <div className="mb-3">
                     <label className="form-label">Password</label>
-                    <input className="form-control" type="password" name="password" required />
+                    <input className="form-control" type="password" name="password" required value={passwordValue} onChange={e => setPasswordValue(e.target.value)} />
                     </div>
                 </div>
             </div>
@@ -197,13 +207,13 @@ Supported:
                     <div className="col">
                         <div className="mb-3">
                             <label className="form-label">NC Value</label>
-                            <input className="form-control" type="text" name="nc" value={nc} />
+                            <input className="form-control" type="text" name="nc" value={ncValue} onChange={e => setNcValue(e.target.value)} />
                         </div>
                     </div>
                     <div className="col">
                         <div className="mb-3">
                             <label className="form-label">cnonce Value</label>
-                            <input className="form-control" type="text" name="cnonce" value={cnonce} />
+                            <input className="form-control" type="text" name="cnonce" value={cnonceValue} onChange={e => setCnonceValue(e.target.value)} />
                         </div>
                     </div>
             </div>
@@ -214,15 +224,14 @@ Supported:
             </form>
             </div>
 
-                <div className="col">
-                    <h3>Output</h3>
-
-                    {result}
-                </div>
-            </div>
+            <div className="col">
+            <h3>Output</h3>
+            {result}
             </div>
 
-            </div>
+            </div> {/* end row */}
+            </div> {/* end tool container */}
+            </div> {/* end alert-info */}
 
             <hr />
 
@@ -252,7 +261,7 @@ Supported:
             In HA1, the username is the SIP authusername <em>if supplied</em>, otherwise normal
             username/identifier. Some SIP setups use a completely different username for
             auth compared to calling.
-            The realm is part of what's returned by the
+            The realm is part of what is returned by the
             40x response. If we have multiple credential sets to choose from this is one
             way to narrow down the selection for the specific endpoint.
             </p>
@@ -283,9 +292,7 @@ Supported:
 
             <h4>Limits</h4>
 
-            <p>This tool is limited to only md5 (not md5-sess or other types). Want
-            more options? Get in touch!
-            </p>
+            <p>This tool is limited to only md5 (not md5-sess or other types).</p>
         </>
     );
 }
