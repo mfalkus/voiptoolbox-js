@@ -12,8 +12,8 @@ function About() {
         staple for real-time communication, extensively in-use today.
         </p>
 
-        <p>To suggest updates or improvements to the site please get in touch via
-        <strong>hello@voiptoolbox.net</strong>.
+        <p>To suggest updates or improvements to the site head
+        over to <a href="https://github.com/mfalkus/voiptoolbox-js">GitHub</a>.
         </p>
 
         <img src={vtLogo} className="about-logo" />

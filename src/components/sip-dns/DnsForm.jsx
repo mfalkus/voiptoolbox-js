@@ -7,6 +7,11 @@ export default function DnsForm() {
 
     let { queryDomain } = useParams();
 
+    // For non-domains or left-over route parts, ignore
+    if (queryDomain && !queryDomain.includes('.')) {
+        queryDomain = '';
+    }
+
     const [refreshTime, setRefreshTime] = useState(0);
     const [value, setValue] = useState(queryDomain ? queryDomain : '');
     const [submittedValue, setSubmittedValue] = useState(queryDomain ? queryDomain : '');
