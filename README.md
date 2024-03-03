@@ -1,8 +1,16 @@
-# React + Vite
+# voiptoolbox.net
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repo is the front-end for the voiptoolbox.net website.
 
-Currently, two official plugins are available:
+The site aims to be a useful resource for SIP/VoIP, with utilities and
+references, primarily around how to configure and troubleshoot the protocol.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Currently the main features are:
+
+- SIP DNS. Query common SRVs and subsequent A records from an initial query domain.
+- Auth header calculator. Can be used to verify an auth'd packet is using the expected credentials.
+- Packet Analysis. Intended to highlight any basic issues with the packet, e.g. malformed headers.
+- Common Call Flow Diagrams
+- Common SIP RFCs and codes
+
+The site is built in React with Vite.js.
